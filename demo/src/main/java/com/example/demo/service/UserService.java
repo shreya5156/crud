@@ -1,10 +1,7 @@
 package com.example.demo.service;
 import com.example.demo.datastore.entity.RegistrationEntity;
 import com.example.demo.datastore.repository.IRegisterRepository;
-import com.example.demo.representation.DeleteByIdReq;
-import com.example.demo.representation.ReadByReq;
-import com.example.demo.representation.RegisterReq;
-import com.example.demo.representation.UpdateByIdReq;
+import com.example.demo.representation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +16,19 @@ public class UserService implements IuserService{
         this.registerRepository = registerRepository;
     }
 
-    public void registerUser(RegisterReq registerReq){
-        RegistrationEntity registrationEntity1 = new RegistrationEntity();
-        registrationEntity1.setId(registerReq.getId());
-        registrationEntity1.setName(registerReq.getFirstName());
-        registrationEntity1.setMobileNumber(registerReq.getPhoneNo());
-        registrationEntity1.setPassword(registerReq.getPassword());
-        registerRepository.save(registrationEntity1);
+    public String registerUser(RegisterReq registerReq){
+        String phNo = registerReq.getPhoneNo();
+        RegistrationEntity registrationEntity = registerRepository.findByMobileNumber(phNo);
+        if(registrationEntity==null){
+            RegistrationEntity registrationEntity1 = new RegistrationEntity();
+            registrationEntity1.setId(registerReq.getId());
+            registrationEntity1.setName(registerReq.getFirstName());
+            registrationEntity1.setMobileNumber(registerReq.getPhoneNo());
+            registrationEntity1.setPassword(registerReq.getPassword());
+            registerRepository.save(registrationEntity1);
+            return "New User Registered";
+        }
+        return "User already exists";
     }
 
     public List<RegistrationEntity> getAllUsers(){
@@ -35,7 +38,8 @@ public class UserService implements IuserService{
 
     @Override
     public List<RegistrationEntity> readByPhNo(ReadByReq readByReq) {
-        return registerRepository.findByMobileNumber(readByReq.getPhoneNo());
+        //return registerRepository.findByMobileNumber(readByReq.getPhoneNo());
+        return null;
     }
 
     @Override
@@ -52,5 +56,14 @@ public class UserService implements IuserService{
         String id = deleteByIdReq.getId();
         // deleteing entity
         registerRepository.deleteById(id);
+    }
+
+    @Override
+    public String login(LoginReq loginReq) {
+        String phNo = loginReq.getPhNo();
+        RegistrationEntity registrationEntity1 = registerRepository.findByMobileNumber(phNo);
+        if(registrationEntity1.getPassword().equals(loginReq.getPwd()))
+            return "Login successful";
+        return "Please register";
     }
 }
