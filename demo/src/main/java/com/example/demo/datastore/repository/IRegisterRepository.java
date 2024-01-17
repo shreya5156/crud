@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface IRegisterRepository extends MongoRepository<RegistrationEntity, String> {
 
-    List<RegistrationEntity> findByMobileNumber(String phNo);
+    RegistrationEntity findByMobileNumber(String phNo);
 }
