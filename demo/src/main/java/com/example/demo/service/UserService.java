@@ -21,8 +21,8 @@ public class UserService implements IuserService{
         RegistrationEntity registrationEntity = registerRepository.findByMobileNumber(phNo);
         if(registrationEntity==null){
             RegistrationEntity registrationEntity1 = new RegistrationEntity();
-            registrationEntity1.setId(registerReq.getId());
-            registrationEntity1.setName(registerReq.getFirstName());
+            registrationEntity1.setLastname(registerReq.getLastname());
+            registrationEntity1.setFirstname(registerReq.getFirstName());
             registrationEntity1.setMobileNumber(registerReq.getPhoneNo());
             registrationEntity1.setPassword(registerReq.getPassword());
             registerRepository.save(registrationEntity1);
@@ -45,10 +45,10 @@ public class UserService implements IuserService{
     @Override
     public void updateById(UpdateByIdReq updateByIdReq) {
 
-        String id = updateByIdReq.getId();
-        RegistrationEntity reg = registerRepository.findById(id).get();
-        reg.setName(updateByIdReq.getName());
-        registerRepository.save(reg);
+//        String id = updateByIdReq.getId();
+//        RegistrationEntity reg = registerRepository.findById(id).get();
+//        reg.setName(updateByIdReq.getName());
+//        registerRepository.save(reg);
     }
 
     @Override
@@ -62,8 +62,8 @@ public class UserService implements IuserService{
     public String login(LoginReq loginReq) {
         String phNo = loginReq.getPhNo();
         RegistrationEntity registrationEntity1 = registerRepository.findByMobileNumber(phNo);
-        if(registrationEntity1.getPassword().equals(loginReq.getPwd()))
-            return "Login successful";
-        return "Please register";
+          if(registrationEntity1.getPassword().equals(loginReq.getPwd()))
+             return "Login successful";
+          return "Please register";
     }
 }

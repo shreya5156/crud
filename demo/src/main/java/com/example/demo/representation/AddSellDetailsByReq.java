@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterReq {
-    private String lastname;
-    private String firstName;
-    private String phoneNo;
-    private String password;
+public class AddSellDetailsByReq {
+    private String category;
+    private Integer numberOfClothes;
 }

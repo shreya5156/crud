@@ -9,18 +9,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 public class UserController {
     private IuserService userService;
 
     @Autowired
     public void setUserService(IuserService userService) {
-
         this.userService = userService;
     }
 
     @PostMapping("/register")
     public String registerUser(@RequestBody RegisterReq registerReq){
-
         return userService.registerUser(registerReq);
     }
     @GetMapping("getAll")
