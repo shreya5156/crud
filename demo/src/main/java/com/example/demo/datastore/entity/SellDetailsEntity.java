@@ -8,11 +8,9 @@ import org.springframework.data.annotation.Id;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegistrationEntity {
+public class SellDetailsEntity {
     @Id
     private String id;
-    private String lastname;
-    private String firstname;
-    private String mobileNumber;
-    private String password;
+    private String category;
+    private Integer numberOfClothes;
 }
